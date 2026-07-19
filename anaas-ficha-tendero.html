@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Anaas — Ficha de Entrevista</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde:  #1B3D2F;
+    --lima:   #8CC63F;
+    --crema:  #F9F6F1;
+    --mid:    #7A7A72;
+    --borde:  rgba(27,61,47,.12);
+    --error:  #E53935;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+  body {
+    background: var(--crema);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--verde);
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
+
+  /* ── HEADER ─────────────────────────────── */
+  .header {
+    background: var(--verde);
+    padding: 20px 20px 16px;
+    position: sticky; top: 0; z-index: 10;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  /* Logo SVG inline — el ojo de Anaas */
+  .logo-svg { width:36px; height:36px; flex-shrink:0; }
+
+  .brand {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.01em;
+  }
+
+  .brand span { color: var(--lima); }
+
+  .header-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,.55);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding-left: 46px;
+  }
+
+  /* ── PROGRESS BAR ────────────────────────── */
+  .progress-wrap {
+    background: var(--verde);
+    padding: 0 20px 16px;
+  }
+
+  .progress-bar {
+    height: 3px;
+    background: rgba(255,255,255,.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--lima);
+    border-radius: 2px;
+    transition: width .4s ease;
+    width: 0%;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 11px;
+    color: rgba(255,255,255,.45);
+  }
+
+  /* ── SECCIONES ───────────────────────────── */
+  .section {
+    margin: 16px 16px 0;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--borde);
+  }
+
+  .section-title {
+    background: var(--verde);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-dot {
+    width: 6px; height: 6px;
+    background: var(--lima);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── CAMPOS ──────────────────────────────── */
+  .field {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--borde);
+  }
+  .field:last-child { border-bottom: none; }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--mid);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    border: 1.5px solid var(--borde);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    color: var(--verde);
+    background: var(--crema);
+    outline: none;
+    transition: border-color .2s;
+    -webkit-appearance: none;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--lima);
+    background: white;
+  }
+
+  .field textarea {
+    min-height: 80px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231B3D2F' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  /* ── CHECKBOXES ──────────────────────────── */
+  .check-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--borde);
+    border-radius: 10px;
+    cursor: pointer;
+    background: var(--crema);
+    transition: all .2s;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .check-item.checked {
+    border-color: var(--lima);
+    background: #F0FBE8;
+  }
+
+  .check-item input[type="checkbox"] { display: none; }
+
+  .check-box {
+    width: 22px; height: 22px;
+    border: 2px solid var(--borde);
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+    background: white;
+  }
+
+  .check-item.checked .check-box {
+    background: var(--lima);
+    border-color: var(--lima);
+  }
+
+  .check-box svg { opacity: 0; transition: opacity .2s; }
+  .check-item.checked .check-box svg { opacity: 1; }
+
+  .check-label {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--verde);
+  }
+
+  /* ── RADIO ESTRELLAS — reacción ──────────── */
+  .reaction-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .reaction-btn {
+    padding: 12px 8px;
+    border: 1.5px solid var(--borde);
+    border-radius: 10px;
+    background: var(--crema);
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .reaction-btn.selected {
+    border-color: var(--lima);
+    background: #F0FBE8;
+  }
+
+  .reaction-btn .emoji { font-size: 22px; display: block; margin-bottom: 4px; }
+  .reaction-btn .text  { font-size: 11px; font-weight: 600; color: var(--mid); }
+  .reaction-btn.selected .text { color: var(--verde); }
+
+  /* ── FRASE DESTACADA ─────────────────────── */
+  .quote-field textarea {
+    border-left: 3px solid var(--lima);
+    border-radius: 0 10px 10px 0;
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  /* ── WHATSAPP TOGGLE ─────────────────────── */
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+  }
+
+  .toggle-info { font-size: 15px; font-weight: 600; }
+  .toggle-sub  { font-size: 12px; color: var(--mid); margin-top: 2px; }
+
+  .toggle {
+    width: 50px; height: 28px;
+    background: var(--borde);
+    border-radius: 14px;
+    position: relative;
+    cursor: pointer;
+    transition: background .3s;
+    flex-shrink: 0;
+  }
+
+  .toggle.on { background: var(--lima); }
+
+  .toggle-knob {
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 22px; height: 22px;
+    background: white;
+    border-radius: 50%;
+    transition: transform .3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,.15);
+  }
+
+  .toggle.on .toggle-knob { transform: translateX(22px); }
+
+  /* Número WhatsApp — aparece si toggle ON */
+  .wa-field {
+    padding: 0 16px 14px;
+    display: none;
+  }
+  .wa-field.visible { display: block; }
+
+  /* ── BOTÓN GUARDAR ───────────────────────── */
+  .save-wrap {
+    padding: 20px 16px 0;
+  }
+
+  .btn-save {
+    width: 100%;
+    background: var(--verde);
+    color: white;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 18px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 6px 20px rgba(27,61,47,.2);
+  }
+
+  .btn-save:active {
+    transform: scale(.97);
+    box-shadow: 0 3px 10px rgba(27,61,47,.15);
+  }
+
+  /* ── MODAL DE ÉXITO ──────────────────────── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(27,61,47,.6);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s;
+    z-index: 100;
+  }
+
+  .modal-overlay.visible {
+    opacity: 1; pointer-events: all;
+  }
+
+  .modal {
+    background: white;
+    border-radius: 20px;
+    padding: 32px 24px;
+    text-align: center;
+    max-width: 320px;
+    width: 100%;
+    transform: scale(.9);
+    transition: transform .3s;
+  }
+
+  .modal-overlay.visible .modal { transform: scale(1); }
+
+  .modal-icon { font-size: 48px; margin-bottom: 16px; }
+  .modal-title { font-size: 22px; font-weight: 800; color: var(--verde); margin-bottom: 8px; }
+  .modal-sub   { font-size: 14px; color: var(--mid); line-height: 1.6; margin-bottom: 24px; }
+
+  .btn-modal {
+    width: 100%;
+    background: var(--lima);
+    color: var(--verde);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+
+  /* ── CONTADOR DE FICHAS ──────────────────── */
+  .btn-secondary {
+    background: white;
+    color: var(--verde);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 14px;
+    border: 2px solid var(--verde);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .btn-secondary:active { background: var(--crema); }
+  .btn-export { border-color: var(--lima); color: var(--lima); }
+
+  /* Panel de fichas */
+  .fichas-panel {
+    position: fixed; inset: 0;
+    background: var(--crema);
+    z-index: 200;
+    overflow-y: auto;
+    padding-bottom: 40px;
+  }
+
+  .fichas-panel-header {
+    background: var(--verde);
+    color: white;
+    padding: 20px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 700;
+    position: sticky; top: 0;
+  }
+
+  .btn-cerrar {
+    background: rgba(255,255,255,.15);
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .ficha-card {
+    margin: 12px 16px 0;
+    background: white;
+    border-radius: 14px;
+    border: 1px solid var(--borde);
+    overflow: hidden;
+  }
+
+  .ficha-card-header {
+    background: var(--verde);
+    color: white;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ficha-card-num {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--lima);
+  }
+
+  .ficha-card-fecha {
+    font-size: 11px;
+    color: rgba(255,255,255,.55);
+  }
+
+  .ficha-card-body { padding: 14px; }
+
+  .ficha-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--borde);
+    padding-bottom: 8px;
+  }
+  .ficha-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .ficha-key {
+    font-weight: 700;
+    color: var(--mid);
+    flex-shrink: 0;
+    width: 110px;
+  }
+
+  .ficha-val { color: var(--verde); }
+
+  .frase-destacada {
+    background: #F0FBE8;
+    border-left: 3px solid var(--lima);
+    padding: 10px 12px;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--verde);
+    margin-top: 8px;
+  }
+
+  .sin-fichas {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--mid);
+    font-size: 15px;
+  }
+
+  .fichas-count {
+    margin: 16px 16px 0;
+    background: var(--lima);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .fichas-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--verde);
+  }
+
+  .fichas-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--verde);
+    opacity: .7;
+    text-align: right;
+    line-height: 1.4;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <svg class="logo-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="60" rx="14" fill="#2D5C43"/>
+      <path d="M8 30 C8 12, 52 12, 52 30" stroke="rgba(249,246,241,0.85)" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M8 30 C8 48, 52 48, 52 30" stroke="rgba(249,246,241,0.85)" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <ellipse cx="30" cy="30" rx="22" ry="8" stroke="rgba(249,246,241,0.4)" stroke-width="2" fill="none"/>
+      <circle cx="30" cy="30" r="5" fill="#8CC63F"/>
+    </svg>
+    <span class="brand">Ana<span>as</span></span>
+  </div>
+  <div class="header-sub">Ficha de entrevista · Tendero</div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-label">
+    <span id="progressText">0% completado</span>
+    <span id="fichaNum">Ficha #<span id="fichaNumVal">1</span></span>
+  </div>
+</div>
+
+<!-- CONTADOR DE FICHAS -->
+<div class="fichas-count">
+  <div class="fichas-num" id="totalFichas">0</div>
+  <div class="fichas-label">fichas<br>guardadas</div>
+</div>
+
+<!-- ══ SECCIÓN 1 — DATOS DEL NEGOCIO ══ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-dot"></span>
+    Datos del negocio
+  </div>
+
+  <div class="field">
+    <label>Nombre del negocio</label>
+    <input type="text" id="nombre_negocio" placeholder="Ej: Tienda Doña Carmen"
+           oninput="updateProgress()">
+  </div>
+
+  <div class="field">
+    <label>Tipo de negocio</label>
+    <select id="tipo_negocio" onchange="updateProgress()">
+      <option value="">— Seleccioná —</option>
+      <option value="tienda">🛒 Tienda de barrio</option>
+      <option value="peluqueria">✂️ Peluquería / Salón</option>
+      <option value="restaurante">🍽️ Restaurante / Comidas</option>
+      <option value="farmacia">💊 Farmacia / Droguería</option>
+      <option value="otro">📦 Otro negocio</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Barrio / Ciudad</label>
+    <input type="text" id="ciudad" placeholder="Ej: Riohacha, La Guajira"
+           oninput="updateProgress()">
+  </div>
+
+  <div class="field">
+    <label>Nombre del dueño</label>
+    <input type="text" id="nombre_dueno" placeholder="Ej: Doña Carmen"
+           oninput="updateProgress()">
+  </div>
+</div>
+
+<!-- ══ SECCIÓN 2 — CÓMO LLEVA CUENTAS HOY ══ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-dot"></span>
+    ¿Cómo lleva cuentas hoy?
+  </div>
+
+  <div class="field">
+    <label>Seleccioná todo lo que usa</label>
+    <div class="check-group" id="metodos">
+      <label class="check-item" onclick="toggleCheck(this)">
+        <input type="checkbox" value="cuaderno">
+        <div class="check-box">
+          <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
+            <path d="M1 4l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="check-label">📓 Cuaderno</span>
+      </label>
+      <label class="check-item" onclick="toggleCheck(this)">
+        <input type="checkbox" value="memoria">
+        <div class="check-box">
+          <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
+            <path d="M1 4l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="check-label">🧠 Memoria</span>
+      </label>
+      <label class="check-item" onclick="toggleCheck(this)">
+        <input type="checkbox" value="excel">
+        <div class="check-box">
+          <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
+            <path d="M1 4l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="check-label">📊 Excel</span>
+      </label>
+      <label class="check-item" onclick="toggleCheck(this)">
+        <input type="checkbox" value="celular">
+        <div class="check-box">
+          <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
+            <path d="M1 4l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="check-label">📱 App del celular</span>
+      </label>
+      <label class="check-item" onclick="toggleCheck(this)">
+        <input type="checkbox" value="nada">
+        <div class="check-box">
+          <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
+            <path d="M1 4l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="check-label">❌ No lleva cuentas</span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECCIÓN 3 — DOLORES ══ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-dot"></span>
+    Dolores que mencionó
+  </div>
+
+  <div class="field">
+    <label>¿Qué problemas tiene con sus cuentas?</label>
+    <textarea id="dolores" placeholder="Ej: Se le olvida quién le debe, no sabe cuánto vendió en la semana..."
+              oninput="updateProgress()"></textarea>
+  </div>
+
+  <div class="field">
+    <label>¿Sabe cuál producto vende más?</label>
+    <select id="sabe_producto" onchange="updateProgress()">
+      <option value="">— Seleccioná —</option>
+      <option value="si">✅ Sí lo sabe</option>
+      <option value="no">❌ No lo sabe</option>
+      <option value="mas_o_menos">🤔 Más o menos</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>¿Le ha pasado que se olvidó de cobrar una deuda?</label>
+    <select id="olvido_deuda" onchange="updateProgress()">
+      <option value="">— Seleccioná —</option>
+      <option value="si">✅ Sí, me ha pasado</option>
+      <option value="no">❌ No, llevo control</option>
+      <option value="frecuente">🔴 Sí, seguido</option>
+    </select>
+  </div>
+</div>
+
+<!-- ══ SECCIÓN 4 — REACCIÓN A ANAAS ══ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-dot"></span>
+    Reacción al ver Anaas
+  </div>
+
+  <div class="field">
+    <label>¿Qué fue lo primero que miró?</label>
+    <input type="text" id="primer_vistazo"
+           placeholder="Ej: El precio, el logo, los módulos..."
+           oninput="updateProgress()">
+  </div>
+
+  <div class="field">
+    <label>¿Cómo fue su reacción?</label>
+    <div class="reaction-group" id="reaccionGroup">
+      <div class="reaction-btn" onclick="selectReaction(this, 'positiva')">
+        <span class="emoji">😃</span>
+        <span class="text">Le gustó</span>
+      </div>
+      <div class="reaction-btn" onclick="selectReaction(this, 'neutral')">
+        <span class="emoji">😐</span>
+        <span class="text">Indiferente</span>
+      </div>
+      <div class="reaction-btn" onclick="selectReaction(this, 'negativa')">
+        <span class="emoji">😕</span>
+        <span class="text">Con dudas</span>
+      </div>
+    </div>
+    <input type="hidden" id="reaccion">
+  </div>
+
+  <div class="field">
+    <label>¿Algo que no entendió?</label>
+    <textarea id="no_entendio"
+              placeholder="Ej: No entendió qué es la IA, le confundió el precio..."
+              oninput="updateProgress()"></textarea>
+  </div>
+</div>
+
+<!-- ══ SECCIÓN 5 — LA FRASE DE ORO ══ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-dot"></span>
+    La frase de oro
+  </div>
+
+  <div class="field quote-field">
+    <label>Escribí exactamente lo que dijo — con sus palabras</label>
+    <textarea id="frase_exacta" rows="4"
+              placeholder='"Yo no sé de eso pero si funciona pa\'l cuaderno…"'
+              oninput="updateProgress()"></textarea>
+  </div>
+</div>
+
+<!-- ══ SECCIÓN 6 — CONTACTO ══ -->
+<div class="section">
+  <div class="section-title">
+    <span class="section-dot"></span>
+    ¿Dejó contacto?
+  </div>
+
+  <div class="toggle-row">
+    <div>
+      <div class="toggle-info">WhatsApp para seguimiento</div>
+      <div class="toggle-sub">¿El tendero dio su número?</div>
+    </div>
+    <div class="toggle" id="waToggle" onclick="toggleWA()">
+      <div class="toggle-knob"></div>
+    </div>
+  </div>
+
+  <div class="wa-field" id="waField">
+    <input type="tel" id="whatsapp"
+           placeholder="Ej: 3001234567"
+           maxlength="10"
+           oninput="updateProgress()">
+  </div>
+</div>
+
+<!-- ══ BOTÓN GUARDAR ══ -->
+<div class="save-wrap">
+  <button class="btn-save" onclick="guardarFicha()">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M4 10l4.5 4.5L16 6" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    Guardar ficha
+  </button>
+</div>
+
+<!-- ══ ACCIONES DE DATOS ══ -->
+<div class="save-wrap" style="margin-top:12px; display:flex; gap:10px;">
+  <button class="btn-secondary" onclick="verFichas()" style="flex:1">
+    Ver fichas guardadas
+  </button>
+  <button class="btn-secondary btn-export" onclick="exportarDatos()" style="flex:1">
+    Exportar datos
+  </button>
+</div>
+
+<!-- ══ PANEL DE FICHAS ══ -->
+<div class="fichas-panel" id="fichasPanel" style="display:none">
+  <div class="fichas-panel-header">
+    <span>Fichas guardadas</span>
+    <button onclick="cerrarPanel()" class="btn-cerrar">Cerrar</button>
+  </div>
+  <div id="fichasLista"></div>
+</div>
+
+<!-- MODAL DE ÉXITO -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-icon">🟢</div>
+    <div class="modal-title">¡Ficha guardada!</div>
+    <div class="modal-sub">Los datos de este tendero quedaron registrados. ¡Seguís construyendo Anaas!</div>
+    <button class="btn-modal" onclick="nuevaFicha()">Registrar otro tendero →</button>
+  </div>
+</div>
+
+<script>
+  // ── Estado ────────────────────────────────
+  let reaccionSeleccionada = '';
+  let waActivo = false;
+  let fichasGuardadas = [];
+
+  // Cargar fichas previas del storage
+  (function init() {
+    try {
+      const saved = window.localStorage
+        ? localStorage.getItem('anaas_fichas')
+        : null;
+      if (saved) fichasGuardadas = JSON.parse(saved);
+    } catch(e) {}
+    actualizarContador();
+    document.getElementById('fichaNumVal').textContent = fichasGuardadas.length + 1;
+  })();
+
+  // ── Checkboxes ────────────────────────────
+  function toggleCheck(label) {
+    label.classList.toggle('checked');
+    updateProgress();
+  }
+
+  // ── Reacción ──────────────────────────────
+  function selectReaction(btn, value) {
+    document.querySelectorAll('.reaction-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    reaccionSeleccionada = value;
+    document.getElementById('reaccion').value = value;
+    updateProgress();
+  }
+
+  // ── Toggle WhatsApp ───────────────────────
+  function toggleWA() {
+    waActivo = !waActivo;
+    document.getElementById('waToggle').classList.toggle('on', waActivo);
+    document.getElementById('waField').classList.toggle('visible', waActivo);
+    updateProgress();
+  }
+
+  // ── Progreso ──────────────────────────────
+  function updateProgress() {
+    const campos = [
+      document.getElementById('nombre_negocio').value.trim(),
+      document.getElementById('tipo_negocio').value,
+      document.getElementById('ciudad').value.trim(),
+      document.getElementById('nombre_dueno').value.trim(),
+      document.getElementById('dolores').value.trim(),
+      document.getElementById('sabe_producto').value,
+      document.getElementById('primer_vistazo').value.trim(),
+      reaccionSeleccionada,
+      document.getElementById('frase_exacta').value.trim(),
+    ];
+
+    const llenos = campos.filter(v => v !== '').length;
+    const pct    = Math.round((llenos / campos.length) * 100);
+
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = pct + '% completado';
+  }
+
+  // ── Guardar ───────────────────────────────
+  function guardarFicha() {
+    const nombre = document.getElementById('nombre_negocio').value.trim();
+    if (!nombre) {
+      alert('Ponele al menos el nombre del negocio 😊');
+      return;
+    }
+
+    // Recolectar métodos marcados
+    const metodos = [];
+    document.querySelectorAll('#metodos .check-item.checked input').forEach(inp => {
+      metodos.push(inp.value);
+    });
+
+    const ficha = {
+      id:             fichasGuardadas.length + 1,
+      fecha:          new Date().toLocaleDateString('es-CO'),
+      hora:           new Date().toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit'}),
+      nombre_negocio: nombre,
+      tipo_negocio:   document.getElementById('tipo_negocio').value,
+      ciudad:         document.getElementById('ciudad').value.trim(),
+      nombre_dueno:   document.getElementById('nombre_dueno').value.trim(),
+      metodos_cuentas:metodos,
+      dolores:        document.getElementById('dolores').value.trim(),
+      sabe_producto:  document.getElementById('sabe_producto').value,
+      olvido_deuda:   document.getElementById('olvido_deuda').value,
+      primer_vistazo: document.getElementById('primer_vistazo').value.trim(),
+      reaccion:       reaccionSeleccionada,
+      no_entendio:    document.getElementById('no_entendio').value.trim(),
+      frase_exacta:   document.getElementById('frase_exacta').value.trim(),
+      whatsapp:       waActivo ? document.getElementById('whatsapp').value.trim() : '',
+    };
+
+    fichasGuardadas.push(ficha);
+
+    // Guardar en localStorage
+    try {
+      if (window.localStorage) {
+        localStorage.setItem('anaas_fichas', JSON.stringify(fichasGuardadas));
+      }
+    } catch(e) {}
+
+    actualizarContador();
+    document.getElementById('modalOverlay').classList.add('visible');
+  }
+
+  // ── Nueva ficha ───────────────────────────
+  function nuevaFicha() {
+    document.getElementById('modalOverlay').classList.remove('visible');
+
+    // Reset campos
+    ['nombre_negocio','ciudad','nombre_dueno','dolores',
+     'primer_vistazo','no_entendio','frase_exacta','whatsapp'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    ['tipo_negocio','sabe_producto','olvido_deuda'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.querySelectorAll('.check-item').forEach(el => el.classList.remove('checked'));
+    document.querySelectorAll('.reaction-btn').forEach(el => el.classList.remove('selected'));
+    reaccionSeleccionada = '';
+    document.getElementById('reaccion').value = '';
+
+    if (waActivo) toggleWA();
+
+    document.getElementById('fichaNumVal').textContent = fichasGuardadas.length + 1;
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Contador ──────────────────────────────
+  function actualizarContador() {
+    document.getElementById('totalFichas').textContent = fichasGuardadas.length;
+  }
+
+  // ── Ver fichas guardadas ──────────────────
+  function verFichas() {
+    const panel = document.getElementById('fichasPanel');
+    const lista = document.getElementById('fichasLista');
+
+    if (fichasGuardadas.length === 0) {
+      lista.innerHTML = '<div class="sin-fichas">Todavia no hay fichas guardadas.<br>Entrevista tu primer tendero.</div>';
+    } else {
+      lista.innerHTML = fichasGuardadas.map(f => `
+        <div class="ficha-card">
+          <div class="ficha-card-header">
+            <span class="ficha-card-num">Ficha #${f.id}</span>
+            <span class="ficha-card-fecha">${f.fecha} ${f.hora}</span>
+          </div>
+          <div class="ficha-card-body">
+            <div class="ficha-row">
+              <span class="ficha-key">Negocio</span>
+              <span class="ficha-val">${f.nombre_negocio || '—'}</span>
+            </div>
+            <div class="ficha-row">
+              <span class="ficha-key">Tipo</span>
+              <span class="ficha-val">${f.tipo_negocio || '—'}</span>
+            </div>
+            <div class="ficha-row">
+              <span class="ficha-key">Ciudad</span>
+              <span class="ficha-val">${f.ciudad || '—'}</span>
+            </div>
+            <div class="ficha-row">
+              <span class="ficha-key">Dueno</span>
+              <span class="ficha-val">${f.nombre_dueno || '—'}</span>
+            </div>
+            <div class="ficha-row">
+              <span class="ficha-key">Cuentas hoy</span>
+              <span class="ficha-val">${f.metodos_cuentas.length ? f.metodos_cuentas.join(', ') : '—'}</span>
+            </div>
+            <div class="ficha-row">
+              <span class="ficha-key">Reaccion</span>
+              <span class="ficha-val">${f.reaccion === 'positiva' ? 'Le gusto' : f.reaccion === 'neutral' ? 'Indiferente' : f.reaccion === 'negativa' ? 'Con dudas' : '—'}</span>
+            </div>
+            <div class="ficha-row">
+              <span class="ficha-key">WhatsApp</span>
+              <span class="ficha-val">${f.whatsapp || 'No dio numero'}</span>
+            </div>
+            ${f.dolores ? `<div class="ficha-row"><span class="ficha-key">Dolores</span><span class="ficha-val">${f.dolores}</span></div>` : ''}
+            ${f.frase_exacta ? `<div class="frase-destacada">"${f.frase_exacta}"</div>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    panel.style.display = 'block';
+    window.scrollTo({ top: 0 });
+  }
+
+  function cerrarPanel() {
+    document.getElementById('fichasPanel').style.display = 'none';
+  }
+
+  // ── Exportar datos ────────────────────────
+  function exportarDatos() {
+    if (fichasGuardadas.length === 0) {
+      alert('No hay fichas guardadas todavia.');
+      return;
+    }
+
+    const fecha   = new Date().toLocaleDateString('es-CO').replace(/\//g, '-');
+    const nombre  = 'anaas-fichas-' + fecha + '.json';
+    const contenido = JSON.stringify(fichasGuardadas, null, 2);
+    const blob    = new Blob([contenido], { type: 'application/json' });
+    const url     = URL.createObjectURL(blob);
+    const a       = document.createElement('a');
+    a.href        = url;
+    a.download    = nombre;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+</script>
+
+</body>
+</html>

@@ -139,7 +139,7 @@ body {
   background: var(--crema);
   outline: none;
   transition: border-color .2s;
-  -webkit-appearance: none;
+  -webkit-appearance: none; appearance: none;
 }
 
 .field input:focus,

@@ -22,7 +22,7 @@ export function alternarCheckboxUI(wrapper) {
 }
 
 export function seleccionarReaccionUI(contenedor, boton) {
-    constenedor.querySelectorAll('.reaction-btn').forEach(b => b.classList.remove('selected'));
+    contenedor.querySelectorAll('.reaction-btn').forEach(b => b.classList.remove('selected'));
     boton.classList.add('selected');
     
     const valor = boton.getAttribute('data-value');

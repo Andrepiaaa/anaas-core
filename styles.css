@@ -284,3 +284,188 @@ body {
 }
 
 .toggle.on .toggle-knob { transform: translateX(22px); }
+
+/* ── BOTONES Y PIE ───────────────────────── */
+.save-wrap {
+  margin: 16px;
+}
+
+.btn-save {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 14px;
+  background: var(--verde);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .2s, background .2s;
+}
+
+.btn-save:hover {
+  transform: translateY(-1px);
+}
+
+.actions-row {
+  display: flex;
+  gap: 12px;
+  margin: 0 16px 16px;
+}
+
+.btn-secondary,
+.btn-modal {
+  border: 1.5px solid var(--borde);
+  border-radius: 14px;
+  background: white;
+  color: var(--verde);
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.btn-secondary:hover,
+.btn-modal:hover {
+  border-color: var(--verde);
+  background: #F0FBE8;
+}
+
+.btn-export {
+  background: var(--lima);
+  color: white;
+  border-color: var(--lima);
+}
+
+.btn-export:hover {
+  background: #7eba24;
+}
+
+.fichas-panel {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  max-height: 72vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 24px;
+  border: 1px solid var(--borde);
+  box-shadow: 0 25px 70px rgba(0,0,0,.15);
+  z-index: 20;
+  padding: 22px 18px 24px;
+}
+
+.fichas-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--borde);
+  margin-bottom: 18px;
+}
+
+.btn-cerrar {
+  border: none;
+  background: transparent;
+  color: var(--verde);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fichas-panel #fichasLista {
+  display: grid;
+  gap: 12px;
+}
+
+.ficha-item {
+  background: var(--crema);
+  border: 1.5px solid var(--borde);
+  border-radius: 18px;
+  padding: 18px 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.ficha-item strong {
+  display: block;
+  font-size: 14px;
+  color: var(--verde);
+  margin-bottom: 10px;
+}
+
+.ficha-item .ficha-line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--verde);
+}
+
+.ficha-item .ficha-label {
+  color: var(--mid);
+  font-weight: 700;
+}
+
+.ficha-item .ficha-value {
+  text-align: right;
+  color: var(--verde);
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(27, 61, 47, 0.35);
+  z-index: 30;
+  padding: 20px;
+}
+
+.modal-overlay.active,
+.modal-overlay[style*="display:flex"] {
+  display: flex;
+}
+
+.modal {
+  width: min(420px, 100%);
+  background: white;
+  border-radius: 24px;
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0,0,0,.16);
+}
+
+.modal-icon {
+  font-size: 3rem;
+  margin-bottom: 14px;
+}
+
+.modal-title {
+  font-weight: 700;
+  color: var(--verde);
+  margin-bottom: 10px;
+}
+
+.modal-sub {
+  color: var(--mid);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.wa-field {
+  display: none;
+  padding: 0 16px 16px;
+}
+
+.wa-field input {
+  margin-top: 10px;
+}

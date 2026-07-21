@@ -11,3 +11,10 @@ export function obtenerFichas() {
 export function obtenerTotalFichas() {
     return obtenerFichas().length;
 }
+
+export function guardarFicha(ficha) {
+    const fichas = obtenerFichas();
+    fichas.push(ficha);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(fichas));
+    return fichas.length;
+}

@@ -287,180 +287,249 @@ body {
 
 /* ── BOTONES Y PIE ───────────────────────── */
 .save-wrap {
-  margin: 16px;
+  padding: 20px 16px 0;
 }
 
 .btn-save {
   width: 100%;
-  display: inline-flex;
+  background: var(--verde);
+  color: white;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 18px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 14px 18px;
-  border: none;
-  border-radius: 14px;
-  background: var(--verde);
-  color: white;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform .2s, background .2s;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 6px 20px rgba(27,61,47,.2);
 }
 
-.btn-save:hover {
-  transform: translateY(-1px);
+.btn-save:active {
+  transform: scale(.97);
+  box-shadow: 0 3px 10px rgba(27,61,47,.15);
+}
+
+/* ── CONTADOR DE FICHAS ──────────────────── */
+.fichas-count {
+  margin: 16px 16px 0;
+  background: var(--lima);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fichas-num {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--verde);
+}
+
+.fichas-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--verde);
+  opacity: .7;
+  text-align: right;
+  line-height: 1.4;
 }
 
 .actions-row {
   display: flex;
   gap: 12px;
-  margin: 0 16px 16px;
+  margin: 16px 16px 0;
 }
 
-.btn-secondary,
-.btn-modal {
-  border: 1.5px solid var(--borde);
-  border-radius: 14px;
+.btn-secondary {
+  flex: 1;
   background: white;
   color: var(--verde);
-  padding: 14px 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 14px;
   font-weight: 700;
+  padding: 14px;
+  border: 2px solid var(--verde);
+  border-radius: 14px;
   cursor: pointer;
-  transition: all .2s;
+  transition: background .2s;
 }
 
-.btn-secondary:hover,
-.btn-modal:hover {
-  border-color: var(--verde);
-  background: #F0FBE8;
-}
+.btn-secondary:active { background: var(--crema); }
 
 .btn-export {
-  background: var(--lima);
-  color: white;
   border-color: var(--lima);
+  color: var(--lima);
 }
 
-.btn-export:hover {
-  background: #7eba24;
-}
-
+/* ── PANEL DE FICHAS ─────────────────────── */
 .fichas-panel {
-  position: fixed;
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
-  max-height: 72vh;
+  position: fixed; inset: 0;
+  background: var(--crema);
+  z-index: 200;
   overflow-y: auto;
-  background: white;
-  border-radius: 24px;
-  border: 1px solid var(--borde);
-  box-shadow: 0 25px 70px rgba(0,0,0,.15);
-  z-index: 20;
-  padding: 22px 18px 24px;
+  padding-bottom: 40px;
 }
 
 .fichas-panel-header {
+  background: var(--verde);
+  color: white;
+  padding: 20px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--borde);
-  margin-bottom: 18px;
+  font-size: 16px;
+  font-weight: 700;
+  position: sticky; top: 0;
 }
 
 .btn-cerrar {
+  background: rgba(255,255,255,.15);
   border: none;
-  background: transparent;
-  color: var(--verde);
-  font-weight: 700;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.fichas-panel #fichasLista {
-  display: grid;
-  gap: 12px;
+#fichasLista {
+  padding: 0 16px 16px;
 }
 
+/* ── TARJETAS DE FICHAS ──────────────────── */
 .ficha-item {
-  background: var(--crema);
-  border: 1.5px solid var(--borde);
-  border-radius: 18px;
-  padding: 18px 16px;
-  display: grid;
-  gap: 10px;
+  margin: 12px 0 0;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid var(--borde);
+  overflow: hidden;
+  display: block;
+  padding: 0;
 }
 
 .ficha-item strong {
-  display: block;
-  font-size: 14px;
-  color: var(--verde);
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--verde);
+  color: white;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.ficha-item strong::after {
+  content: attr(data-fecha);
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: rgba(255,255,255,.55);
 }
 
 .ficha-item .ficha-line {
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
   gap: 8px;
-  font-size: 14px;
-  color: var(--verde);
+  margin: 0 14px;
+  padding: 10px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  border-bottom: 1px solid var(--borde);
+}
+
+.ficha-item .ficha-line:last-of-type {
+  border-bottom: none;
+}
+
+.ficha-item .ficha-line:first-of-type {
+  margin-top: 14px;
 }
 
 .ficha-item .ficha-label {
-  color: var(--mid);
   font-weight: 700;
+  color: var(--mid);
+  flex-shrink: 0;
+  width: 110px;
 }
 
 .ficha-item .ficha-value {
-  text-align: right;
   color: var(--verde);
 }
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgba(27, 61, 47, 0.35);
-  z-index: 30;
-  padding: 20px;
+.frase-destacada {
+  background: #F0FBE8;
+  border-left: 3px solid var(--lima);
+  padding: 10px 12px;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--verde);
+  margin: 8px 14px 14px;
 }
 
-.modal-overlay.active,
-.modal-overlay[style*="display:flex"] {
-  display: flex;
+.sin-fichas {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--mid);
+  font-size: 15px;
+}
+
+/* ── MODAL DE ÉXITO ──────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(27,61,47,.6);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+  z-index: 100;
+}
+
+.modal-overlay.active {
+  opacity: 1; pointer-events: all;
 }
 
 .modal {
-  width: min(420px, 100%);
   background: white;
-  border-radius: 24px;
-  padding: 28px 24px;
+  border-radius: 20px;
+  padding: 32px 24px;
   text-align: center;
-  box-shadow: 0 25px 60px rgba(0,0,0,.16);
+  max-width: 320px;
+  width: 100%;
+  transform: scale(.9);
+  transition: transform .3s;
 }
 
-.modal-icon {
-  font-size: 3rem;
-  margin-bottom: 14px;
-}
+.modal-overlay.active .modal { transform: scale(1); }
 
-.modal-title {
-  font-weight: 700;
+.modal-icon { font-size: 48px; margin-bottom: 16px; }
+.modal-title { font-size: 22px; font-weight: 800; color: var(--verde); margin-bottom: 8px; }
+.modal-sub   { font-size: 14px; color: var(--mid); line-height: 1.6; margin-bottom: 24px; }
+
+.btn-modal {
+  width: 100%;
+  background: var(--lima);
   color: var(--verde);
-  margin-bottom: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
-.modal-sub {
-  color: var(--mid);
-  font-size: 14px;
-  line-height: 1.5;
-  margin-bottom: 18px;
-}
-
+/* ── WHATSAPP ─────────────────────────────── */
 .wa-field {
   display: none;
   padding: 0 16px 16px;

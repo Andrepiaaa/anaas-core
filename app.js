@@ -46,6 +46,9 @@ function guardarFicha(event) {
 
     const metodos = Array.from(document.querySelectorAll('#metodos input[type="checkbox"]:checked')).map((input) => input.value);
     const ficha = {
+        id:             storage.obtenerTotalFichas() + 1,
+        fecha:          new Date().toLocaleDateString('es-CO'),
+        hora:           new Date().toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit'}),
         nombre_negocio: document.getElementById('nombre_negocio')?.value.trim() || '',
         tipo_negocio: document.getElementById('tipo_negocio')?.value || '',
         ciudad: document.getElementById('ciudad')?.value.trim() || '',
@@ -70,7 +73,7 @@ function guardarFicha(event) {
 
     const modalOverlay = document.getElementById('modalOverlay');
     if (modalOverlay) {
-        modalOverlay.style.display = 'flex';
+        modalOverlay.classList.add('active');
     }
 }
 
@@ -82,16 +85,25 @@ function verFichas() {
 
     fichasLista.innerHTML = '';
     if (fichas.length === 0) {
-        fichasLista.innerHTML = '<div>No hay fichas guardadas.</div>';
+        fichasLista.innerHTML = '<div class="sin-fichas">Todavia no hay fichas guardadas.<br>Entrevista tu primer tendero.</div>';
     } else {
-        fichas.forEach((ficha, index) => {
+        fichas.forEach((ficha) => {
             const item = document.createElement('div');
             item.className = 'ficha-item';
+            const reaccionTxt = ficha.reaccion === 'positiva' ? '😃 Le gusto'
+                : ficha.reaccion === 'neutral' ? '😐 Indiferente'
+                : ficha.reaccion === 'negativa' ? '😕 Con dudas' : '—';
             item.innerHTML = `
-                <strong>Ficha ${index + 1}</strong>
-                <div class="ficha-line"><span class="ficha-label">Negocio</span><span class="ficha-value">${ficha.nombre_negocio || 'No registrado'}</span></div>
-                <div class="ficha-line"><span class="ficha-label">Ciudad</span><span class="ficha-value">${ficha.ciudad || 'No registrado'}</span></div>
-                <div class="ficha-line"><span class="ficha-label">Métodos</span><span class="ficha-value">${ficha.metodos?.length ? ficha.metodos.join(' • ') : 'No registrado'}</span></div>
+                <strong data-fecha="${ficha.fecha || ''} ${ficha.hora || ''}">Ficha #${ficha.id || '?'}</strong>
+                <div class="ficha-line"><span class="ficha-label">Negocio</span><span class="ficha-value">${ficha.nombre_negocio || '—'}</span></div>
+                <div class="ficha-line"><span class="ficha-label">Tipo</span><span class="ficha-value">${ficha.tipo_negocio || '—'}</span></div>
+                <div class="ficha-line"><span class="ficha-label">Ciudad</span><span class="ficha-value">${ficha.ciudad || '—'}</span></div>
+                <div class="ficha-line"><span class="ficha-label">Duenno</span><span class="ficha-value">${ficha.nombre_dueno || '—'}</span></div>
+                <div class="ficha-line"><span class="ficha-label">Cuentas</span><span class="ficha-value">${ficha.metodos?.length ? ficha.metodos.join(', ') : '—'}</span></div>
+                <div class="ficha-line"><span class="ficha-label">Reaccion</span><span class="ficha-value">${reaccionTxt}</span></div>
+                <div class="ficha-line"><span class="ficha-label">WhatsApp</span><span class="ficha-value">${ficha.whatsapp || 'No dio numero'}</span></div>
+                ${ficha.dolores ? `<div class="ficha-line"><span class="ficha-label">Dolores</span><span class="ficha-value">${ficha.dolores}</span></div>` : ''}
+                ${ficha.frase_exacta ? `<div class="frase-destacada">"${ficha.frase_exacta}"</div>` : ''}
             `;
             fichasLista.appendChild(item);
         });

@@ -42,7 +42,7 @@ function updateProgress() {
 }
 
 function guardarFicha(event) {
-    event.preventDefault();
+    if (event) event.preventDefault();
 
     const nombre = document.getElementById('nombre_negocio')?.value.trim();
     if (!nombre) {
@@ -188,7 +188,6 @@ function nuevaFicha() {
 
 function initEvents() {
     const checkGroup = document.getElementById('metodos');
-    const btnGuardarFicha = document.getElementById('btnGuardarFicha');
     const reactionGroup = document.getElementById('reaccionGroup');
     const waToggle = document.getElementById('waToggle');
     const btnNuevaFicha = document.getElementById('btnNuevaFicha');
@@ -225,16 +224,13 @@ function initEvents() {
         });
     }
 
-    if (btnGuardarFicha) {
-        btnGuardarFicha.addEventListener('click', guardarFicha);
-    }
-
     if (btnNuevaFicha) {
         btnNuevaFicha.addEventListener('click', nuevaFicha);
     }
 }
 
 window.updateProgress = updateProgress;
+window.guardarFicha = guardarFicha;
 window.verFichas = verFichas;
 window.exportarDatos = exportarDatos;
 window.cerrarPanel = cerrarPanel;

@@ -71,11 +71,16 @@ function guardarFicha(event) {
         whatsapp:       document.getElementById('whatsapp')?.value.trim() || ''
     };
 
-    storage.guardarFicha(ficha);
+    const total = storage.guardarFicha(ficha);
 
     const totalFichasNode = document.getElementById('totalFichas');
     if (totalFichasNode) {
-        totalFichasNode.textContent = storage.obtenerTotalFichas();
+        totalFichasNode.textContent = total;
+    }
+
+    const fichaNumVal = document.getElementById('fichaNumVal');
+    if (fichaNumVal) {
+        fichaNumVal.textContent = total + 1;
     }
 
     const modalOverlay = document.getElementById('modalOverlay');
@@ -161,6 +166,12 @@ function exportarDatos() {
 function nuevaFicha() {
     document.getElementById('modalOverlay').style.display = 'none';
 
+    // Actualizar número de ficha
+    const fichaNumVal = document.getElementById('fichaNumVal');
+    if (fichaNumVal) {
+        fichaNumVal.textContent = storage.obtenerTotalFichas() + 1;
+    }
+
     // Reset campos de texto
     ['nombre_negocio','ciudad','nombre_dueno','dolores',
      'primer_vistazo','no_entendio','frase_exacta','whatsapp'].forEach(id => {
@@ -237,9 +248,16 @@ window.cerrarPanel = cerrarPanel;
 window.nuevaFicha = nuevaFicha;
 
 document.addEventListener('DOMContentLoaded', () => {
+    const total = storage.obtenerTotalFichas();
+
     const totalFichasNode = document.getElementById('totalFichas');
     if (totalFichasNode) {
-        totalFichasNode.textContent = storage.obtenerTotalFichas();
+        totalFichasNode.textContent = total;
+    }
+
+    const fichaNumVal = document.getElementById('fichaNumVal');
+    if (fichaNumVal) {
+        fichaNumVal.textContent = total + 1;
     }
 
     initEvents();

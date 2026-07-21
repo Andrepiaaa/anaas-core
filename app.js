@@ -44,21 +44,31 @@ function updateProgress() {
 function guardarFicha(event) {
     event.preventDefault();
 
+    const nombre = document.getElementById('nombre_negocio')?.value.trim();
+    if (!nombre) {
+        alert('Ponele al menos el nombre del negocio 😊');
+        return;
+    }
+
     const metodos = Array.from(document.querySelectorAll('#metodos input[type="checkbox"]:checked')).map((input) => input.value);
+    const fichasExistentes = storage.obtenerFichas();
     const ficha = {
-        nombre_negocio: document.getElementById('nombre_negocio')?.value.trim() || '',
-        tipo_negocio: document.getElementById('tipo_negocio')?.value || '',
-        ciudad: document.getElementById('ciudad')?.value.trim() || '',
-        nombre_dueno: document.getElementById('nombre_dueno')?.value.trim() || '',
-        metodos,
-        dolores: document.getElementById('dolores')?.value.trim() || '',
-        sabe_producto: document.getElementById('sabe_producto')?.value || '',
-        olvido_deuda: document.getElementById('olvido_deuda')?.value || '',
+        id:             fichasExistentes.length + 1,
+        fecha:          new Date().toLocaleDateString('es-CO'),
+        hora:           new Date().toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit'}),
+        nombre_negocio: nombre,
+        tipo_negocio:   document.getElementById('tipo_negocio')?.value || '',
+        ciudad:         document.getElementById('ciudad')?.value.trim() || '',
+        nombre_dueno:   document.getElementById('nombre_dueno')?.value.trim() || '',
+        metodos_cuentas:metodos,
+        dolores:        document.getElementById('dolores')?.value.trim() || '',
+        sabe_producto:  document.getElementById('sabe_producto')?.value || '',
+        olvido_deuda:   document.getElementById('olvido_deuda')?.value || '',
         primer_vistazo: document.getElementById('primer_vistazo')?.value.trim() || '',
-        reaccion: document.getElementById('reaccion')?.value || '',
-        no_entendio: document.getElementById('no_entendio')?.value.trim() || '',
-        frase_exacta: document.getElementById('frase_exacta')?.value.trim() || '',
-        whatsapp: document.getElementById('whatsapp')?.value.trim() || ''
+        reaccion:       document.getElementById('reaccion')?.value || '',
+        no_entendio:    document.getElementById('no_entendio')?.value.trim() || '',
+        frase_exacta:   document.getElementById('frase_exacta')?.value.trim() || '',
+        whatsapp:       document.getElementById('whatsapp')?.value.trim() || ''
     };
 
     storage.guardarFicha(ficha);
@@ -80,21 +90,49 @@ function verFichas() {
     const fichasLista = document.getElementById('fichasLista');
     if (!fichasPanel || !fichasLista) return;
 
-    fichasLista.innerHTML = '';
     if (fichas.length === 0) {
-        fichasLista.innerHTML = '<div>No hay fichas guardadas.</div>';
+        fichasLista.innerHTML = '<div class="sin-fichas">Todavia no hay fichas guardadas.<br>Entrevista tu primer tendero.</div>';
     } else {
-        fichas.forEach((ficha, index) => {
-            const item = document.createElement('div');
-            item.className = 'ficha-item';
-            item.innerHTML = `
-                <strong>Ficha ${index + 1}</strong>
-                <div class="ficha-line"><span class="ficha-label">Negocio</span><span class="ficha-value">${ficha.nombre_negocio || 'No registrado'}</span></div>
-                <div class="ficha-line"><span class="ficha-label">Ciudad</span><span class="ficha-value">${ficha.ciudad || 'No registrado'}</span></div>
-                <div class="ficha-line"><span class="ficha-label">Métodos</span><span class="ficha-value">${ficha.metodos?.length ? ficha.metodos.join(' • ') : 'No registrado'}</span></div>
-            `;
-            fichasLista.appendChild(item);
-        });
+        fichasLista.innerHTML = fichas.map(f => `
+            <div class="ficha-card">
+                <div class="ficha-card-header">
+                    <span class="ficha-card-num">Ficha #${f.id}</span>
+                    <span class="ficha-card-fecha">${f.fecha || ''} ${f.hora || ''}</span>
+                </div>
+                <div class="ficha-card-body">
+                    <div class="ficha-row">
+                        <span class="ficha-key">Negocio</span>
+                        <span class="ficha-val">${f.nombre_negocio || '—'}</span>
+                    </div>
+                    <div class="ficha-row">
+                        <span class="ficha-key">Tipo</span>
+                        <span class="ficha-val">${f.tipo_negocio || '—'}</span>
+                    </div>
+                    <div class="ficha-row">
+                        <span class="ficha-key">Ciudad</span>
+                        <span class="ficha-val">${f.ciudad || '—'}</span>
+                    </div>
+                    <div class="ficha-row">
+                        <span class="ficha-key">Dueño</span>
+                        <span class="ficha-val">${f.nombre_dueno || '—'}</span>
+                    </div>
+                    <div class="ficha-row">
+                        <span class="ficha-key">Cuentas hoy</span>
+                        <span class="ficha-val">${f.metodos_cuentas?.length ? f.metodos_cuentas.join(', ') : '—'}</span>
+                    </div>
+                    <div class="ficha-row">
+                        <span class="ficha-key">Reacción</span>
+                        <span class="ficha-val">${f.reaccion === 'positiva' ? 'Le gustó' : f.reaccion === 'neutral' ? 'Indiferente' : f.reaccion === 'negativa' ? 'Con dudas' : '—'}</span>
+                    </div>
+                    <div class="ficha-row">
+                        <span class="ficha-key">WhatsApp</span>
+                        <span class="ficha-val">${f.whatsapp || 'No dio número'}</span>
+                    </div>
+                    ${f.dolores ? `<div class="ficha-row"><span class="ficha-key">Dolores</span><span class="ficha-val">${f.dolores}</span></div>` : ''}
+                    ${f.frase_exacta ? `<div class="frase-destacada">"${f.frase_exacta}"</div>` : ''}
+                </div>
+            </div>
+        `).join('');
     }
 
     fichasPanel.style.display = 'block';
@@ -118,6 +156,34 @@ function exportarDatos() {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+}
+
+function nuevaFicha() {
+    document.getElementById('modalOverlay').style.display = 'none';
+
+    // Reset campos de texto
+    ['nombre_negocio','ciudad','nombre_dueno','dolores',
+     'primer_vistazo','no_entendio','frase_exacta','whatsapp'].forEach(id => {
+        document.getElementById(id).value = '';
+    });
+    // Reset selects
+    ['tipo_negocio','sabe_producto','olvido_deuda'].forEach(id => {
+        document.getElementById(id).value = '';
+    });
+    // Reset reacción
+    document.querySelectorAll('.reaction-btn').forEach(el => el.classList.remove('selected'));
+    document.getElementById('reaccion').value = '';
+    // Reset checkboxes
+    document.querySelectorAll('.check-item').forEach(el => el.classList.remove('checked'));
+    // Reset WhatsApp toggle
+    const waToggle = document.getElementById('waToggle');
+    if (waToggle && waToggle.classList.contains('on')) {
+        waToggle.classList.remove('on');
+        document.getElementById('waField').style.display = 'none';
+    }
+
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function initEvents() {
@@ -164,7 +230,7 @@ function initEvents() {
     }
 
     if (btnNuevaFicha) {
-        btnNuevaFicha.addEventListener('click', () => window.location.reload());
+        btnNuevaFicha.addEventListener('click', nuevaFicha);
     }
 }
 
@@ -172,6 +238,7 @@ window.updateProgress = updateProgress;
 window.verFichas = verFichas;
 window.exportarDatos = exportarDatos;
 window.cerrarPanel = cerrarPanel;
+window.nuevaFicha = nuevaFicha;
 
 document.addEventListener('DOMContentLoaded', () => {
     const totalFichasNode = document.getElementById('totalFichas');

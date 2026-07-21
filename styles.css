@@ -405,7 +405,7 @@ body {
 }
 
 /* ── TARJETAS DE FICHAS ──────────────────── */
-.ficha-item {
+.ficha-card {
   margin: 12px 16px 0;
   background: white;
   border-radius: 14px;
@@ -413,7 +413,7 @@ body {
   overflow: hidden;
 }
 
-.ficha-item strong {
+.ficha-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -426,34 +426,43 @@ body {
   text-transform: uppercase;
 }
 
-.ficha-item .ficha-line {
+.ficha-card-num {
+  font-weight: 700;
+}
+
+.ficha-card-fecha {
+  font-weight: 400;
+  font-size: 11px;
+}
+
+.ficha-card-body {
+  padding: 14px;
+}
+
+.ficha-row {
   display: flex;
   gap: 8px;
-  padding: 0 14px 8px;
+  padding: 0 0 8px;
   margin: 0 0 8px;
   font-size: 13px;
   line-height: 1.5;
   border-bottom: 1px solid var(--borde);
 }
 
-.ficha-item .ficha-line:first-of-type {
-  padding-top: 14px;
-}
-
-.ficha-item .ficha-line:last-of-type {
+.ficha-row:last-of-type {
   border-bottom: none;
   margin-bottom: 0;
-  padding-bottom: 14px;
+  padding-bottom: 0;
 }
 
-.ficha-item .ficha-label {
+.ficha-key {
   font-weight: 700;
   color: var(--mid);
   flex-shrink: 0;
   width: 110px;
 }
 
-.ficha-item .ficha-value {
+.ficha-val {
   color: var(--verde);
 }
 

@@ -42,6 +42,8 @@
   <div class="fichas-label">fichas<br>guardadas</div>
 </div>
 
+<main>
+
 <!-- ══ SECCIÓN 1 — DATOS DEL NEGOCIO ══ -->
 <div class="section">
   <div class="section-title">
@@ -116,6 +118,24 @@
           </svg>
         </div>
         <span class="check-label">📊 Excel</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" value="landing">
+        <div class="check-box">
+          <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
+            <path d="M1 4l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="check-label">🌐 Landing / Página web</span>
+      </label>
+      <label class="check-item">
+        <input type="checkbox" value="web_movil">
+        <div class="check-box">
+          <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
+            <path d="M1 4l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="check-label">📱 Página móvil</span>
       </label>
     </div>
   </div>
@@ -245,13 +265,35 @@
   </button>
 </div>
 
+<div class="actions-row" style="display:flex; gap:12px; padding: 16px;">
+  <button class="btn-secondary" onclick="verFichas()" style="flex:1">
+    Ver fichas guardadas
+  </button>
+  <button class="btn-secondary btn-export" onclick="exportarDatos()" style="flex:1">
+    Exportar datos
+  </button>
+</div>
+
+<!-- ══ PANEL DE FICHAS ══ -->
+<div class="fichas-panel" id="fichasPanel" style="display:none">
+  <div class="fichas-panel-header">
+    <span>Fichas guardadas</span>
+    <button onclick="cerrarPanel()" class="btn-cerrar">Cerrar</button>
+  </div>
+  <div id="fichasLista"></div>
+</div>
+
 <!-- ══ MODAL DE ÉXITO ══ -->
 <div id="modalOverlay" class="modal-overlay">
   <div class="modal" id="modalContent">
     <div class="modal-icon">🟢</div>
+    <div class="modal-title">¡Ficha guardada!</div>
+    <div class="modal-sub">Los datos de este tendero quedaron registrados. ¡Seguís construyendo Anaas!</div>
     <button class="btn-modal" id="btnNuevaFicha">Registrar otro tendero →</button>
   </div>
 </div>
+
+</main>
 
 <script type="module" src="app.js"></script>
 </body>
